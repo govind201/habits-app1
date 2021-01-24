@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Croissant+One|Open+Sans|Open+Sans+Condensed:300|Quicksand&display=swap');
+
+
+.App-container {
+    max-width: 100%;
+    max-height: 100%;
+    width: 100vw;
+    height: 100vh;
+    /* padding: var(--m) var(--m); */
+    /* margin: auto; */
+    overflow: hidden;
+  }
+
+  .signature {
+    position:fixed;
+    margin-top: 30%;
+    width: 500px;
+    height: 10px;
+    /* margin-left: calc(50vw - 250px); */
+    color: lightcyan;
+    font-family: "Quicksand";
+    font-size: 12px;
+    left: 3%;
+    bottom: 3%;
+
+  }
+
+  .tour-button {
+    position: fixed;
+    margin-top: 30%;
+    left: 92%;
+    bottom: 3%;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    height: 20px;
+    width: 40px;
+    color: white;
+    font-family: "Quicksand";
+  }
+  

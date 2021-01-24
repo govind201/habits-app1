@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css?family=Croissant+One|Open+Sans|Open+Sans+Condensed:300|Quicksand&display=swap');
+
+/* Create a custom checkbox */
+
+.habit-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    margin: 10px 0;
+    border-radius: 10px;
+    z-index: 1;
+
+    background-color: rgba(255, 255, 255, 0.3);
+    color: rgb(238, 238, 238);
+}
+
+.habit-label {
+    display: flex;
+    align-items: center;
+}
+
+.habit-label:hover .checkmark {
+    border-width: 3px;
+    padding: 0;
+}
+
+.habit-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    margin: 0 15px;
+    padding: 1px;
+    border-radius: 100%;
+    border: rgb(238, 238, 238) 2px solid;
+    background-color: none;
+}
+
+.checkmark:hover {
+    cursor: pointer;
+    border-width: 3px;
+}
+
+label:hover {
+    cursor: pointer;
+}
+
+/* When the checkbox is checked*/
+.habit-container input:checked ~ .checkmark {
+    background-color: rgb(238, 238, 238);
+}
+
+.habit-container button {
+    position: absolute;
+    right: 5px;
+    background-color: transparent;
+    border: none;
+    z-index: 1;
+}
+
+.close {
+    padding: 3px 0 0 0;
+    width: 12px;
+}

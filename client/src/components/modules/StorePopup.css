@@ -1,0 +1,47 @@
+.big-store-window {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.btn-containers {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: center;
+}
+
+.store-popup-window {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.7);
+    height: fit-content;
+    max-height: 500px;
+    overflow-y: auto;
+    width: 400px;
+    padding: 5px 10px 10px 5px;
+    margin-left: calc(50vw - 200px);
+    margin-top: calc(50vh - 150px);
+    border-style: solid;
+    border-color: white;
+    border-width: 2px;
+    border-radius: 10px;
+    color:black;
+    animation: popIn;
+    animation-duration: 0.1s;
+    font-family: "Quicksand";
+    z-index: 5;
+}
+
+.closeButton {
+    position: 'absolute';
+    padding: 100; 
+    background-color:  rgba(255, 255, 255, 0.3);
+    align-content: center;
+    border-radius: 5px;
+    border-color: gray;
+    font-family: "Quicksand";
+    color: black;
+    font-size: 10px;
+}

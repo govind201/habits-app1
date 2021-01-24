@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css?family=Croissant+One|Open+Sans|Open+Sans+Condensed:300|Quicksand&display=swap');
+
+
+.window {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.3);
+    height: fit-content;
+    max-height: 400px;
+    
+    width: 400px;
+    padding: 5px 10px 10px 5px;
+    margin-left: calc(50vw - 200px);
+    margin-top: calc(100vh - 500px);
+    border-style: solid;
+    border-color: white;
+    border-width: 2px;
+    border-radius: 10px;
+    color: white;
+    animation: popIn;
+    animation-duration: 0.1s;
+    font-family: "Quicksand";
+    z-index: 2;
+    
+}
+
+.place-fish-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow-y: auto;
+}
+
+.no-items {
+    font-family: "Quicksand";
+    color: rgb(226, 226, 226);
+    padding: 0px 0px 5px 0px;
+}
+
+@keyframes popIn{
+    50%  {transform: scale(1.2);}
+  }
+
+.closeButton {
+    position: 'absolute';
+    padding: 100; 
+    background-color:  rgba(255, 255, 255, 0.3);
+    align-content: center;
+    border-radius: 5px;
+    font-family: "Quicksand";
+    color: white;
+    
+}
+
+.closeButton:hover {
+    cursor: pointer;
+}
+
+.fishButton {
+    position: 'center';
+    height: 40px;
+    width: 100px;
+    margin: 20px;
+    padding: 100; 
+    background-color:  rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    font-family: "Quicksand";
+    z-index: 2;
+    color: white;
+}
+
+.fishButton:hover {
+    cursor: pointer;
+}

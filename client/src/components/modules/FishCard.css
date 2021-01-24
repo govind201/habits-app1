@@ -1,0 +1,61 @@
+.FishCard {
+    box-sizing: border-box;
+    background: var(--pastelpink);
+    border: thick solid #FFFFFF;
+    border-radius: 18px;
+    z-index: 1;
+    position:relative;
+    margin: 1%;
+}
+
+.FishCard:hover {
+    background: #FFFFFF;
+}
+
+.FishCard-price {
+    box-sizing: border-box;
+    z-index: -1;
+    position:relative;
+
+    background: #F6F7FA;
+    border: 1px solid #CFD9E4;
+    border-radius: 4px;
+
+
+}
+
+
+.FishCard-name {
+    box-sizing: border-box;
+    position:relative;
+}
+
+.FishCard-title {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    margin-bottom: 20px;
+    margin-left: 6px;
+}
+
+.square:hover {
+    background: #FFFFFF;
+}
+
+.square {
+    width: 15%;
+    min-width: 100px;
+}
+  
+.square:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+

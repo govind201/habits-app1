@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Croissant+One|Open+Sans|Open+Sans+Condensed:300|Quicksand&display=swap');
+.logo {
+    margin: 0;
+    width: 600px;
+    height: 100px;
+    position: absolute;
+    top: calc(50vh - 90px);
+    left: calc(50vw - 300px);
+    font-size: 50px;
+    color: whitesmoke;
+    font-family: "Croissant One", "cursive";
+    text-align: center;
+}
+
+.logo-container{
+
+    height: 100vh;
+    position: relative;
+    background-image: url("./coral-reef.jpg");
+    background-size: cover;
+
+}
+
+.description {
+    top: calc(50vh + 80px);
+    position: absolute;
+    height: 50px;
+    width: 500px;
+    left: calc(50vw - 250px);
+    font-family: 'Quicksand', sans-serif;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 18px;
+    text-align: center;
+}
+
+.login-button{
+    position: absolute;
+    top: calc(50vh + 140px);
+    left: calc(50vw - 30px);
+}
+
