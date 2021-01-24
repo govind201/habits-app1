@@ -1,6 +1,8 @@
 # 6.148 Web Lab 2020
 Team: Claire Cheng, Andrea Lin, Cindy Wang
 
+Deployed at: http://habitaquarium.herokuapp.com/
+
 ## Sources
 
 [close.png](client/src/components/data/close.png): https://thenounproject.com/
