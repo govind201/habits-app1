@@ -11,6 +11,7 @@
     "react-google-login": "^5.2.2",
     "react-scripts": "4.0.3",
     "reactour": "^1.18.4",
+    "socket.io-client": "^4.1.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
