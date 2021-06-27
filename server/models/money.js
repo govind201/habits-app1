@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
 const moneySchema = new mongoose.Schema({
-    type: String,
-    
+    googleId: String,
+    money: Number
 }) 
+
+module.exports = mongoose.model('money', moneySchema)
     
