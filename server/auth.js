@@ -11,7 +11,7 @@ function verify(token) {
       idToken: token,
       audience: CLIENT_ID,
     })
-    .then((ticket) => ticket.getPayload());
+    .then((ticket) => ticket.getPayload()).catch(err => console.error("Couldn't verify token", err)); 
 }
 
 // gets user from DB, or makes a new account if it doesn't exist yet

@@ -25,9 +25,7 @@ const removeUser = (user, socket) => {
   if (user) delete userToSocketMap[user._id];
   delete socketToUserMap[socket.id];
 };
-
-module.exports = {
-  init: (http) => {
+const init =  (http) =>{
     io = require("socket.io")(http);
 
     io.on("connection", (socket) => {
@@ -38,11 +36,11 @@ module.exports = {
         removeUser(user, socket);
       });
     });
-  },
-
+} 
+module.exports = {
+  init: init,
   addUser: addUser,
   removeUser: removeUser,
-
   getSocketFromUserID: getSocketFromUserID,
   getUserFromSocketID: getUserFromSocketID,
   getSocketFromSocketID: getSocketFromSocketID,
