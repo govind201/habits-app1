@@ -131,9 +131,9 @@ function App() {
   const [lastFedObject, setLastFedObject] = useState({});
   const [deadFishArray, setDeadFishArray] = useState([]);
   const [popText, setPopText] =  useState('');
-
-
-
+  const [moneyIndicator, setMoneyIndicator] = useState(false);
+  const [popUp, setPopUp] = useState(false);
+  const [isFishFed, setIsFishFed] = useState(false);
  useEffect( ()=>{
       const  fetch  = async () => {
       const user = await get('/whoami')
@@ -216,9 +216,42 @@ function App() {
                   setPopText("Because You haven't fed your fish for 3 days, your oldest fish has died.");
                   // what about fish die toggle tho
               }
+            }
+             const money = await get("api/money")
+          if (money.money == null) {
+            await post("api/createMoney")
+            setMoneyIndicator(  true  );
+          }
+        const name = await get("api/name")
+          if (name.name == null) {
+           await  post("api/newName")
+          }
+ }        
+   const handleLogout = async () => {
+     setUser({userId: null, googleid: null});
+     await post('/logout')
+   }        
+
+   const checkIfFed  = async () => {
+        const lastFedObject = await get('feedfish', {googleid: user.googleid});
+        setLastFedObject(lastFedObject);
+        if(placedFishArray.length === 0) {
+           setPopText("Oops, you don't have any fish in your aquarium");
+           togglePopUp();
+        } 
+        else if(lastFedObject.lastFed === 0) {
+          await post('/feedfish');
+           setPopText("Yay, you have fed your fish");
+           setIsFishFed(true);
+           togglePopUp();
         }
-      
-    }
+
+   } 
+     
+   const togglePopUp = ()=> {
+        setPopUp((curr) => !curr);
+   }
+         
   return (
     <div className="App">
       <header className="App-header">
