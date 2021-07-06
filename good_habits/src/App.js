@@ -123,24 +123,22 @@ const steps = [
     
 
 function App() {
-  const[userId, setUserId] = useState('');
-  const[googleid, setGoogleId] = useState('');
-  const[isTourOpen, setIsTourOpen] = useState(true);
+  const [user, setUser] = useState({userid: '', googleid: ''})
+  const [isTourOpen, setIsTourOpen] = useState(true);
   const [completeTutotial, setCompletedTutorial] = useState(false);
-  const[notPlacedFish, setNotPlacedFish] = useState(0);
-  const[placedFish, setPlacedFish] = useState(0);
-  const[lastFedObject, setLastFedObject] = useState({});
+  const [notPlacedFish, setNotPlacedFish] = useState(0);
+  const [placedFishArray, setPlacedFishArray] = useState([]);
+  const [lastFedObject, setLastFedObject] = useState({});
+  const [deadFishArray, setDeadFishArray] = useState([]);
+  const [popText, setPopText] =  useState('');
 
-  useEffect(()=>{
-    if(userId && googleid && isTourOpen && completeTutotial && notPlacedFish && placedFish && lastFedObject) console.log("Y")
-  })
+
 
  useEffect( ()=>{
       const  fetch  = async () => {
       const user = await get('/whoami')
       if(user._id) {
-        setUserId(user._id);
-        setGoogleId(user.googleid);
+        setUser({userid: user._id, googleid: user.googleid});
         const resId = await get('/tutorial',{googleid: user.googleid})
 
         if(resId == null) {
@@ -150,29 +148,82 @@ function App() {
           setCompletedTutorial(true);
           setIsTourOpen(false);
         }
-        const notPlacedFish = await get('/buyfish', {googleid: googleid}); 
+        const notPlacedFish = await get('/buyfish', {googleid: user.googleid}); 
           setNotPlacedFish(notPlacedFish);
 
-        const placedFish = await get('/placedFish', {googleid: googleid});
-        setPlacedFish(placedFish);
+        const placedFishArray = await get('/placedFish', {googleid: user.googleid});
+        setPlacedFishArray(placedFishArray);
         
         // Return object of lastFedFish
-        const lastFedObject = await get('feedfish', {googleid: googleid});
-        const  lastFedDate  =  lastFedObject ? lastFedObject.lastfed : 0;
+        const lastFedObject = await get('feedfish', {googleid: user.googleid});
         setLastFedObject(lastFedObject);
-        if(placedFish.length > 0) {
-          const lastDeadObject = await get('/killfish', {googleid: googleid});
+        let deadFishArray = 0;
+        if(placedFishArray.length > 0) {
+           deadFishArray = await get('/killfish', {googleid: user.googleid});
+          setDeadFishArray(deadFishArray);
+        }
+        const notFedDuration = lastFedObject && Date.now() - Date.parse(lastFedObject.lastFed) 
+        if(notFedDuration > threeDays) {
+              let lastFedFishIndex =  Math.floor(notFedDuration) / threeDays;
+              if(lastFedFishIndex > placedFishArray.length)
+                  lastFedFishIndex = placedFishArray.length - 1;
+              if(!deadFishArray || (Date.now() - Date.parse(deadFishArray[deadFishArray.length - 1]) > threeDays )) {
+                  setDeadFishArray(placedFishArray.slice(0, lastFedFishIndex));
+                  setPopText("Because You haven't fed your fish for 3 days, your oldest fish has died.");
+                  // what about fish die toggle tho?
+              }
         }
       }
     }
      fetch();
- }, [googleid]) 
+ }, [setUser])
+
+ const handleLogin = async (res) =>{
+          const userToken = res.tokenObj.id_token;
+    post("/login", { token: userToken }).then((user) => {
+      setUser({ userId: user._id, gId: user.googleid, });
+    });
+      await post("/initsocket", { socketid: socket.id });
+        const resId = await get('/tutorial',{googleid: user.googleid})
+
+        if(resId == null) {
+          setCompletedTutorial(false);
+          setIsTourOpen(true);
+        }else{
+          setCompletedTutorial(true);
+          setIsTourOpen(false);
+        }
+        const notPlacedFish = await get('/buyfish', {googleid: user.googleid}); 
+          setNotPlacedFish(notPlacedFish);
+
+        const placedFishArray = await get('/placedFish', {googleid: user.googleid});
+        setPlacedFishArray(placedFishArray);
+        
+        // Return object of lastFedFish
+        const lastFedObject = await get('feedfish', {googleid: user.googleid});
+        setLastFedObject(lastFedObject);
+        if(placedFishArray.length > 0) {
+          const deadFishArray = await get('/killfish', {googleid: user.googleid});
+          setDeadFishArray(deadFishArray);
+        }
+        const notFedDuration = lastFedObject && Date.now() - Date.parse(lastFedObject.lastFed) 
+        if(notFedDuration > threeDays) {
+              let lastFedFishIndex =  Math.floor(notFedDuration) / threeDays;
+              if(lastFedFishIndex > placedFishArray.length)
+                  lastFedFishIndex = placedFishArray.length - 1;
+              if(!deadFishArray || (Date.now() - Date.parse(deadFishArray[deadFishArray.length - 1]) > threeDays )) {
+                  setDeadFishArray(placedFishArray.slice(0, lastFedFishIndex));
+                  setPopText("Because You haven't fed your fish for 3 days, your oldest fish has died.");
+                  // what about fish die toggle tho?
+              }
+        }
+      
+    }
   return (
     <div className="App">
       <header className="App-header">
       </header>
     </div>
   )
-  } 
-
+  }
 export default App;
