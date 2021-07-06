@@ -214,7 +214,7 @@ function App() {
               if(!deadFishArray || (Date.now() - Date.parse(deadFishArray[deadFishArray.length - 1]) > threeDays )) {
                   setDeadFishArray(placedFishArray.slice(0, lastFedFishIndex));
                   setPopText("Because You haven't fed your fish for 3 days, your oldest fish has died.");
-                  // what about fish die toggle tho?
+                  // what about fish die toggle tho
               }
         }
       
