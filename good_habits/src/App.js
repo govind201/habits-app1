@@ -2,9 +2,8 @@ import './App.css';
 import React, {useEffect, useState} from "react";
 import { get, post } from './utils/fetch';
 import { socket } from './socketio-client';
-import { threeDays } from './utils/util';
-
-   const CLIENT_ID = '600958172796-05nnr8dkvl4h6u9hm4r6lc6slt3plhfh.apps.googleusercontent.com';
+import { oneDay, threeDays } from './utils/util';
+const CLIENT_ID = '600958172796-05nnr8dkvl4h6u9hm4r6lc6slt3plhfh.apps.googleusercontent.com';
    const tutorial = [
   {
     selector: '',
@@ -120,13 +119,11 @@ const steps = [
 ]
 
 
-    
-
 function App() {
   const [user, setUser] = useState({userid: '', googleid: ''})
   const [isTourOpen, setIsTourOpen] = useState(true);
   const [completeTutotial, setCompletedTutorial] = useState(false);
-  const [notPlacedFish, setNotPlacedFish] = useState(0);
+  const [notPlacedFishArray, setNotPlacedFishArray] = useState([]);
   const [placedFishArray, setPlacedFishArray] = useState([]);
   const [lastFedObject, setLastFedObject] = useState({});
   const [deadFishArray, setDeadFishArray] = useState([]);
@@ -148,8 +145,8 @@ function App() {
           setCompletedTutorial(true);
           setIsTourOpen(false);
         }
-        const notPlacedFish = await get('/buyfish', {googleid: user.googleid}); 
-          setNotPlacedFish(notPlacedFish);
+        const notPlacedFishArray  = await get('/buyfish', {googleid: user.googleid}); 
+          setNotPlacedFishArray(notPlacedFishArray);
 
         const placedFishArray = await get('/placedFish', {googleid: user.googleid});
         setPlacedFishArray(placedFishArray);
@@ -193,8 +190,8 @@ function App() {
           setCompletedTutorial(true);
           setIsTourOpen(false);
         }
-        const notPlacedFish = await get('/buyfish', {googleid: user.googleid}); 
-          setNotPlacedFish(notPlacedFish);
+        const notPlacedFishArray = await get('/buyfish', {googleid: user.googleid}); 
+          setNotPlacedFishArray(notPlacedFishArray);
 
         const placedFishArray = await get('/placedFish', {googleid: user.googleid});
         setPlacedFishArray(placedFishArray);
@@ -214,7 +211,6 @@ function App() {
               if(!deadFishArray || (Date.now() - Date.parse(deadFishArray[deadFishArray.length - 1]) > threeDays )) {
                   setDeadFishArray(placedFishArray.slice(0, lastFedFishIndex));
                   setPopText("Because You haven't fed your fish for 3 days, your oldest fish has died.");
-                  // what about fish die toggle tho
               }
             }
              const money = await get("api/money")
@@ -239,19 +235,50 @@ function App() {
            setPopText("Oops, you don't have any fish in your aquarium");
            togglePopUp();
         } 
-        else if(lastFedObject.lastFed === 0) {
+        else if(lastFedObject.lastFed === 0 || Date.now() - Date.parse(lastFedObject.lastFed) > oneDay)  {
           await post('/feedfish');
            setPopText("Yay, you have fed your fish");
            setIsFishFed(true);
            togglePopUp();
         }
+        else {
+          togglePopUp();
+           setPopText("You have already fed your fish in the last day");
 
-   } 
+        }
+
+   }  
      
    const togglePopUp = ()=> {
         setPopUp((curr) => !curr);
    }
-         
+   const pickingFish = () => {
+     console.log("Fish is being picked");
+   }
+
+   const sellFish = (fish) => {
+       const idx = placedFishArray.indexOf(fish);
+       setPlacedFishArray(currArray => currArray.splice(idx, 1));
+   }       
+  const addingFish  = (newFish) => {
+    const idx = notPlacedFishArray.indexOf(newFish);
+    setPlacedFishArray(placedFishArray => [...placedFishArray, newFish])
+    setNotPlacedFishArray(currArray => currArray.splice(idx, 1));
+    const [type, price] = newFish;
+    const body = {type, price, googleid: user.googleid};
+    post('/placefish', body);
+    post('/removefish', body);
+  }
+  const addAllFish = () => {
+    for (let idx = 0; idx < notPlacedFishArray.length; idx++){
+      let {type, price} = notPlacedFishArray[idx];
+      const body = {type, price, googleid: user.googleid};
+      post("/api/placefish", body);
+      post("/api/removefish", body);
+    }
+    setNotPlacedFishArray([]);
+    setPlacedFishArray(placedFishArray => [...placedFishArray, notPlacedFishArray])
+  }
   return (
     <div className="App">
       <header className="App-header">
