@@ -22,8 +22,7 @@ import turtle from "./data/turtle.png";
 import octopus from "./data/octopus.png";
 import seaHorse from "./data/seahorse.png";
 
-const CLIENT_ID = '600958172796-05nnr8dkvl4h6u9hm4r6lc6slt3plhfh.apps.googleusercontent.com';
-   const tutorial = [
+   const firstTimeSteps = [
   {
     selector: '',
     content: "Welcome to Habit Aquarium! Let's go through a quick introduction. You can use the arrows (or arrow keys) to navigate.",
@@ -141,7 +140,7 @@ const steps = [
 function App() {
   const [user, setUser] = useState({userid: '', googleid: ''})
   const [isTourOpen, setIsTourOpen] = useState(true);
-  const [completeTutotial, setCompletedTutorial] = useState(false);
+  const [completedTutorial, setCompletedTutorial] = useState(false);
   const [notPlacedFishArray, setNotPlacedFishArray] = useState([]);
   const [placedFishArray, setPlacedFishArray] = useState([]);
   const [lastFedObject, setLastFedObject] = useState({});
@@ -304,7 +303,7 @@ function App() {
                  
   const closeTour = () => {
      setIsTourOpen(false);
-     if(!completeTutotial) {
+     if(!completedTutorial) {
        const body = {googleid: user.googleid};
        post('/tutorial', body);
        setCompletedTutorial(true);
@@ -372,7 +371,7 @@ function App() {
   return (
     <div className="App">
        {!user.userid  ? <Login  handleLogin = {handleLogin}/>:
-       (!completeTutotial || isTourOpen) ? <CircleLoaded /> 
+       (!completedTutorial || isTourOpen) ? <CircleLoaded /> 
        : <div>
        <Tour
         steps={completedTutorial ? steps : firstTimeSteps}
@@ -419,11 +418,11 @@ function App() {
             />
             <Store
               path="/store"
-              boughtFish = {boughtFish}
+              buyFish = {buyFish}
               displayFish = {displayFish}
-              fishList={placedfish}
+              fishList={placedFishArray}
               togglePopup = {togglePopup}
-              tutorialMoneyIndicator = {tutorialMoneyIndicator}
+              moneyIndicator = {moneyIndicator}
               />
             <Inventory
               path="/inventory"
