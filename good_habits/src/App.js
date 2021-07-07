@@ -3,6 +3,25 @@ import React, {useEffect, useState} from "react";
 import { get, post } from './utils/fetch';
 import { socket } from './socketio-client';
 import { oneDay, threeDays } from './utils/util';
+import doryFish from "./data/doryFish";
+import blueYellowFish from "./data/blueyellowfish.png";
+import greenYellowPuffer from "./data/greenyellowpuffer.png";
+import clownFish from "./data/clownfish.png";
+import patch from "./data/patchyfish.png";
+import peach from "./data/peachpuffer.png";
+import pink from "./data/pinkfish.png";
+import purplepeach from "./data/purplepeachfish.png";
+import yellowFish from "./data/yellowfish.png";
+import algae from "./data/algae.png";
+import multiColorFish from "./data/multicolorfish.png";
+import plankton from "./data/plankton.png";
+import ppfish from "./data/purplepatternedfish.png";
+import shrimp from "./data/shrimp.png";
+import striped from "./data/stripedfish.png";
+import turtle from "./data/turtle.png";
+import octopus from "./data/octopus.png";
+import seaHorse from "./data/seahorse.png";
+
 const CLIENT_ID = '600958172796-05nnr8dkvl4h6u9hm4r6lc6slt3plhfh.apps.googleusercontent.com';
    const tutorial = [
   {
@@ -129,7 +148,7 @@ function App() {
   const [deadFishArray, setDeadFishArray] = useState([]);
   const [popText, setPopText] =  useState('');
   const [moneyIndicator, setMoneyIndicator] = useState(false);
-  const [popUp, setPopUp] = useState(false);
+  const [popup, setPopup] = useState(false);
   const [isFishFed, setIsFishFed] = useState(false);
  useEffect( ()=>{
       const  fetch  = async () => {
@@ -233,24 +252,24 @@ function App() {
         setLastFedObject(lastFedObject);
         if(placedFishArray.length === 0) {
            setPopText("Oops, you don't have any fish in your aquarium");
-           togglePopUp();
+           togglePopup();
         } 
         else if(lastFedObject.lastFed === 0 || Date.now() - Date.parse(lastFedObject.lastFed) > oneDay)  {
           await post('/feedfish');
            setPopText("Yay, you have fed your fish");
            setIsFishFed(true);
-           togglePopUp();
+           togglePopup();
         }
         else {
-          togglePopUp();
+          togglePopup();
            setPopText("You have already fed your fish in the last day");
 
         }
 
    }  
      
-   const togglePopUp = ()=> {
-        setPopUp((curr) => !curr);
+   const togglePopup = ()=> {
+        setPopup((curr) => !curr);
    }
    const pickingFish = () => {
      console.log("Fish is being picked");
@@ -279,9 +298,152 @@ function App() {
     setNotPlacedFishArray([]);
     setPlacedFishArray(placedFishArray => [...placedFishArray, notPlacedFishArray])
   }
+  const buyFish = (newFish) => {
+        setNotPlacedFishArray(currArray => [...currArray, newFish]); 
+  }
+                 
+  const closeTour = () => {
+     setIsTourOpen(false);
+     if(!completeTutotial) {
+       const body = {googleid: user.googleid};
+       post('/tutorial', body);
+       setCompletedTutorial(true);
+     }
+  }
+  const openTour = () => {
+        setIsTourOpen(true);
+  }
+  const displayFish = (fishName) => {
+    if(fishName === 'doryfish') 
+        return  doryFish;
+    else if (fishName === 'blueyellowfish') {
+      return blueYellowFish; 
+    }
+    else if (fishName === 'greenyellowpuffer') {
+      return greenYellowPuffer; 
+    }
+    else if (fishName === 'patchyfish') {
+      return patch;
+    }
+    else if (fishName === 'peachpuffer') {
+      return peach;
+    }
+      else if (fishName === 'pinkfish') {
+        return pink;
+    }
+    else if (fishName === 'purplepeachfish') {
+      return purplepeach;
+    }
+    else if (fishName === 'clownfish') {
+      return  clownFish; 
+    }
+    else if (fishName === 'yellowfish') {
+      return yellowFish;
+    }
+    else if (fishName === 'algae'){
+      return algae;
+    }
+    else if (fishName === 'multicolorfish'){
+      return multiColorFish; 
+    }
+    else if (fishName === 'plankton'){
+      return plankton;
+    }
+    else if (fishName === 'purplepatternedfish'){
+      return ppfish;
+    }
+    else if (fishName === 'shrimp'){
+      return shrimp;
+    }
+    else if (fishName === 'stripedfish') {
+      return striped;
+    }
+    else if (fishName === 'turtle'){
+      return turtle;
+    }
+    else if (fishName === 'octopus'){
+      return octopus;
+    }
+    else if (fishName === 'seahorse') {
+      return seaHorse;
+    }
+  }
+     
   return (
     <div className="App">
+       {!user.userid  ? <Login  handleLogin = {handleLogin}/>:
+       (!completeTutotial || isTourOpen) ? <CircleLoaded /> 
+       : <div>
+       <Tour
+        steps={completedTutorial ? steps : firstTimeSteps}
+        closeWithMask={completedTutorial ? true : false}
+        startAt={0}
+        isOpen={isTourOpen}
+        onRequestClose={closeTour} 
+        />
+          <div className="App-container">
+          <NavBar
+            handleLogin={ handleLogin}
+            handleLogout={handleLogout}
+            userId={user.userid}
+          />
+
+<div className="fishies">
+            {this.state.placedfish.map((f,i) => (
+              f.type === 'octopus' ? <LargeFish key={i} image={this.displayFish(f.type)}/> : 
+              <Fish key={i} image={this.displayFish(f.type)}/>
+            ))}
+            </div>
+          
+          <Router>
+            <Aquarium
+              path="/"
+              fishlist={placedFishArray}
+              checkifFed={checkIfFed}
+              pickingFish = {pickingFish}
+              popup = {popup}
+              popText = {popText}
+              togglePopup = {togglePopup}
+              notPlacedFishArray = {notPlacedFishArray}
+              addingFish = {addingFish}
+              displayFish = {displayFish}
+              addAllFish = {addAllFish}
+              deadFishArray = {deadFishArray}
+              isFishFed = {isFishFed}
+              />
+            <Habits
+              path="/habits"
+              fishList={this.state.placedfish}
+              displayFish = {this.displayFish}
+              moneyIndicator = {moneyIndicator}
+            />
+            <Store
+              path="/store"
+              boughtFish = {boughtFish}
+              displayFish = {displayFish}
+              fishList={placedfish}
+              togglePopup = {togglePopup}
+              tutorialMoneyIndicator = {tutorialMoneyIndicator}
+              />
+            <Inventory
+              path="/inventory"
+              fishList = {placedFishArray}
+              displayFish = {displayFish}
+              gId = {user.googleid}
+              sellFish = {sellFish}
+              />
+            <NotFound default />
+          </Router> 
+          <button className="tour-button" data-tut="tourbutton" onClick={this.openTour}>Tour</button>
+          <div className="signature">
+            made with love (and lots of fish) by Claire, Andrea, and Cindy
+          </div>
+        </div>
+      
+       </div>
+       }
       <header className="App-header">
+        Header
       </header>
     </div>
   )
