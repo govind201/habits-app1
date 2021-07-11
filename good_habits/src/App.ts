@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import { get, post } from './utils/fetch';
 import { socket } from './socketio-client';
 import { oneDay, threeDays } from './utils/util';
-import doryFish from "./data/doryFish";
+import doryFish  from "./data/doryfish.png";
 import blueYellowFish from "./data/blueyellowfish.png";
 import greenYellowPuffer from "./data/greenyellowpuffer.png";
 import clownFish from "./data/clownfish.png";
@@ -22,6 +22,7 @@ import turtle from "./data/turtle.png";
 import octopus from "./data/octopus.png";
 import seaHorse from "./data/seahorse.png";
 import Habits from './components/pages/Habits';
+import { any } from 'joi';
 
    const firstTimeSteps = [
   {
@@ -35,9 +36,9 @@ import Habits from './components/pages/Habits';
   {
     selector: '[data-tut="newhabit"]',
     content: "Time to create your first daily habit! Think of something you'd like to do every day, then hit enter or use the + to add your habit.",
-    action: node => {
-      // by using this, focus trap is temporary disabled
-    },
+    // action: node => {
+    //   // by using this, focus trap is temporary disabled
+    // },
   },
   {
     selector: '[data-tut="habittabs"]',
@@ -92,10 +93,10 @@ const steps = [
   {
     selector: '[data-tut="newhabit"]',
     content: "Create habits by typing them in this field. Hit enter or use the + to add your habit.",
-    action: node => {
-      // by using this, focus trap is temporary disabled
-    },
-    //disableInteraction: false,
+    // action: node=> {
+    //   // by using this, focus trap is temporary disabled
+    // },
+    // //disableInteraction: false,
   },
   {
     selector: '[data-tut="habittabs"]',
@@ -150,6 +151,8 @@ function App() {
   const [moneyIndicator, setMoneyIndicator] = useState(false);
   const [popup, setPopup] = useState(false);
   const [isFishFed, setIsFishFed] = useState(false);
+
+  
  useEffect( ()=>{
       const  fetch  = async () => {
       const user = await get('/whoami')
@@ -173,7 +176,7 @@ function App() {
         // Return object of lastFedFish
         const lastFedObject = await get('feedfish', {googleid: user.googleid});
         setLastFedObject(lastFedObject);
-        let deadFishArray = 0;
+        let deadFishArray = []
         if(placedFishArray.length > 0) {
            deadFishArray = await get('/killfish', {googleid: user.googleid});
           setDeadFishArray(deadFishArray);
@@ -197,7 +200,8 @@ function App() {
  const handleLogin = async (res) =>{
           const userToken = res.tokenObj.id_token;
     post("/login", { token: userToken }).then((user) => {
-      setUser({ userId: user._id, gId: user.googleid, });
+
+      setUser({ userid: user._id as string, googleid: user.googleid as string, });
     });
       await post("/initsocket", { socketid: socket.id });
         const resId = await get('/tutorial',{googleid: user.googleid})
@@ -243,7 +247,7 @@ function App() {
           }
  }        
    const handleLogout = async () => {
-     setUser({userId: null, googleid: null});
+     setUser({userid: '', googleid: ''});
      await post('/logout')
    }        
 
@@ -279,7 +283,7 @@ function App() {
        const idx = placedFishArray.indexOf(fish);
        setPlacedFishArray(currArray => currArray.splice(idx, 1));
    }       
-  const addingFish  = (newFish) => {
+  const addingFish  = (newFish  ) => {
     const idx = notPlacedFishArray.indexOf(newFish);
     setPlacedFishArray(placedFishArray => [...placedFishArray, newFish])
     setNotPlacedFishArray(currArray => currArray.splice(idx, 1));
