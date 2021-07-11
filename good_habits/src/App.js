@@ -21,6 +21,7 @@ import striped from "./data/stripedfish.png";
 import turtle from "./data/turtle.png";
 import octopus from "./data/octopus.png";
 import seaHorse from "./data/seahorse.png";
+import Habits from './components/pages/Habits';
 
    const firstTimeSteps = [
   {
@@ -370,80 +371,8 @@ function App() {
      
   return (
     <div className="App">
-       {!user.userid  ? <Login  handleLogin = {handleLogin}/>:
-       (!completedTutorial || isTourOpen) ? <CircleLoaded /> 
-       : <div>
-       <Tour
-        steps={completedTutorial ? steps : firstTimeSteps}
-        closeWithMask={completedTutorial ? true : false}
-        startAt={0}
-        isOpen={isTourOpen}
-        onRequestClose={closeTour} 
-        />
-          <div className="App-container">
-          <NavBar
-            handleLogin={ handleLogin}
-            handleLogout={handleLogout}
-            userId={user.userid}
-          />
-
-<div className="fishies">
-            {this.state.placedfish.map((f,i) => (
-              f.type === 'octopus' ? <LargeFish key={i} image={this.displayFish(f.type)}/> : 
-              <Fish key={i} image={this.displayFish(f.type)}/>
-            ))}
-            </div>
-          
-          <Router>
-            <Aquarium
-              path="/"
-              fishlist={placedFishArray}
-              checkifFed={checkIfFed}
-              pickingFish = {pickingFish}
-              popup = {popup}
-              popText = {popText}
-              togglePopup = {togglePopup}
-              notPlacedFishArray = {notPlacedFishArray}
-              addingFish = {addingFish}
-              displayFish = {displayFish}
-              addAllFish = {addAllFish}
-              deadFishArray = {deadFishArray}
-              isFishFed = {isFishFed}
-              />
-            <Habits
-              path="/habits"
-              fishList={this.state.placedfish}
-              displayFish = {this.displayFish}
-              moneyIndicator = {moneyIndicator}
-            />
-            <Store
-              path="/store"
-              buyFish = {buyFish}
-              displayFish = {displayFish}
-              fishList={placedFishArray}
-              togglePopup = {togglePopup}
-              moneyIndicator = {moneyIndicator}
-              />
-            <Inventory
-              path="/inventory"
-              fishList = {placedFishArray}
-              displayFish = {displayFish}
-              gId = {user.googleid}
-              sellFish = {sellFish}
-              />
-            <NotFound default />
-          </Router> 
-          <button className="tour-button" data-tut="tourbutton" onClick={this.openTour}>Tour</button>
-          <div className="signature">
-            made with love (and lots of fish) by Claire, Andrea, and Cindy
-          </div>
-        </div>
-      
-       </div>
-       }
-      <header className="App-header">
-        Header
-      </header>
+      From App
+      <Habits moneyIndicator = {moneyIndicator} />
     </div>
   )
   }
