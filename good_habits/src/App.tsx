@@ -22,7 +22,6 @@ import turtle from "./data/turtle.png";
 import octopus from "./data/octopus.png";
 import seaHorse from "./data/seahorse.png";
 import Habits from './components/pages/Habits';
-import { any } from 'joi';
 
    const firstTimeSteps = [
   {

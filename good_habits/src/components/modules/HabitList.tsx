@@ -1,15 +1,29 @@
 import React from 'react'
 import {get, post} from "../../utils/fetch";
 import { toDay, toMonth, toWeek } from '../../utils/util';
-import Habit from './habit';
-import usePrevious from '../../utils/usePrevious';
+import {Habit} from './Habit';
+ 
+// type HabitTypeProps =  "daily" | "weekly" | "monthly";
+enum HabitTypeEnum {
+    Daily = "daily" ,
+    Weekly = "weekly" ,  
+     Monthly = "monthly"
+}
 
+export interface  HabitInterface  {
+    _id: string;
+    creator_id?: string; 
+    content?:  string;
+    isDone: boolean; 
+    date: Date;
+    type: HabitTypeEnum;
+}; 
 
 export default function HabitList({moneyIndicator}) {
-    const [habitList, setHabitList] = React.useState([]);
-    const [habitType, setHabitType] = React.useState("daily");
+    const  [habitList, setHabitList] = React.useState<HabitInterface[]>([]);
+    const [habitType, setHabitType] = React.useState < HabitTypeEnum>(HabitTypeEnum.Daily);
     const [habitTitle, setHabitTitle] = React.useState("");
-    const [balance, setBalance] = React.useState(null);
+    const [balance, setBalance] = React.useState<number>(0);
     const [habitText, setHabitText] = React.useState("");
     const  prevMoneyIndicator = React.useRef(moneyIndicator);
 
@@ -26,16 +40,15 @@ export default function HabitList({moneyIndicator}) {
     }, []);
  
     React.useEffect(()=>{
-          if(moneyIndicator != prevMoneyIndicator) {
-              const moneyObj = get('/money');
-              setBalance(moneyObj.money);
+          if(prevMoneyIndicator !== moneyIndicator) {
+               get('/money').then( (moneyObj) => setBalance(moneyObj.money)).catch(error => console.log(error))
           }
     })
 
     
-   async function  reloadHabitList(type = "daily") {
-        let habitsToReset = [];
-        let habits = []
+   async function  reloadHabitList(type =  HabitTypeEnum.Daily) {
+        let habitsToReset= []; 
+        let habits= []; 
         let todaysDateObj = new Date(); //Use new Date() to get a Date for the current time returns  date object
      //Date. now() to get the current time in milliseconds since 01 January, 1970 UTC return a number
         if(type === "daily") {
@@ -79,14 +92,14 @@ export default function HabitList({moneyIndicator}) {
             }
              habits.push(habitObj);
         });
-         setHabitList(habits);
+        setHabitList(habits);
 
          for (let idx in habitsToReset) {
              post("/updateHabit", habitsToReset[idx]);
          } 
     }; 
 
-    function isSameWeek(date1, date2) {
+    function isSameWeek(date1: Date, date2: Date) {
          let dateObj1 = new Date(); 
          let dateObj2 = new Date(); 
 
@@ -100,29 +113,29 @@ export default function HabitList({moneyIndicator}) {
 
     }
     
-    function isSameDayMonthAndYear(date1, date2) {
+    function isSameDayMonthAndYear(date1:Date, date2:Date) {
             let date1DayMonthAndYear  = getMonthDayAndYearFromDate(date1);
             let  date2DayMonthAndYear = getMonthDayAndYearFromDate(date2); 
             
             return  date1DayMonthAndYear.sort().toString() === date2DayMonthAndYear.sort().toString();
 
     }
-    function isSameDayMonth(date1, date2) {
+    function isSameDayMonth(date1:Date, date2:Date) {
          return  date1.getFullYear() !== date2.getFullYear() ||
             date1.getMonth() !== date2.getMonth();
     }
-    function getMonthDayAndYearFromDate(date) {
+    function getMonthDayAndYearFromDate(date:Date) {
         return [date.getFullYear(), date.getMonth(), date.getDate()];
     }
 
     function dailyTabClicked () { 
-        reloadHabitList('daily');
+        reloadHabitList(HabitTypeEnum.Daily);
     }
     function  weeklyTabClicked () {
-        reloadHabitList("weekly");
+        reloadHabitList(HabitTypeEnum.Weekly);
     }
     function monthlyTabClicked() {
-        reloadHabitList("monthly");
+        reloadHabitList(HabitTypeEnum.Monthly);
     }
     
     async function deleteHabit(id) {
@@ -131,25 +144,24 @@ export default function HabitList({moneyIndicator}) {
 
     }
        
- addNewHabit = (habitObj) => {
-     setHabitList(currList => [...currList, habitObj]);
-     habitText("");
+ const addNewHabit = (habitObj) => {
+     setHabitList(currList => [...currList , habitObj]);
+     setHabitText("");
  }
-   onSubmit = ()=> {
+   const  onSubmit= ()=> {
       if (habitText) {
-        body = {habit}
-         input.focus();
          const body = {content: habitText, type: habitType}
          post("/habit", body).then(habitObj => {
              addNewHabit(habitObj);
          })
       }
+    }
 
    const onKeyDown = (event) => {
        event.preventDefault();
        if(event.key === "Enter") {
            event.preventDefault();
-           onsubmit();
+           onSubmit();
        }
    }
 
@@ -160,15 +172,16 @@ export default function HabitList({moneyIndicator}) {
         <div> 
              <div className="left-container">
           <div className="habittabs" data-tut="habittabs">
-            <button className={`button ${this.state.type === 'daily' ? 'active' : 'inactive'}`} onClick={this.dailyTab} type="button">daily</button>
-            <button className={`button ${this.state.type === 'weekly' ? 'active' : 'inactive'}`} onClick={this.weeklyTab} type="button">weekly</button>
-            <button className={`button ${this.state.type === 'monthly' ? 'active' : 'inactive'}`} onClick={this.monthlyTab} type="button">monthly</button>
+          
+            <button className={`button ${habitType === 'daily' ? 'active' : 'inactive'}`} onClick={dailyTabClicked} type="button">daily</button>
+            <button className={`button ${habitType === 'weekly' ? 'active' : 'inactive'}`} onClick={weeklyTabClicked} type="button">weekly</button>
+            <button className={`button ${habitType=== 'monthly' ? 'active' : 'inactive'}`} onClick={monthlyTabClicked} type="button">monthly</button>
           </div>
           <div className="panel"></div>
               </div>
             <div>{habitTitle}</div>
            {habitList.map(habit =>  (<Habit key={habit._id}
-            content={habit.content}
+             content = {habit.content}
             isDone={habit.isDone}
             updatedDd={isDone => updatedDb(isDone, habit._id)}
         delteHabit={()=> deleteHabit(habit._id)}
@@ -192,4 +205,4 @@ export default function HabitList({moneyIndicator}) {
           </div>
 
     )
-}
+           }
