@@ -1,8 +1,7 @@
 import React from 'react'
 import {get, post} from "../../utils/fetch";
 import { toDay, toMonth, toWeek } from '../../utils/util';
-import {Habit} from './Habit';
- 
+import {Habit} from "./Habit";
 // type HabitTypeProps =  "daily" | "weekly" | "monthly";
 enum HabitTypeEnum {
     Daily = "daily" ,
@@ -165,9 +164,20 @@ export default function HabitList({moneyIndicator}) {
        }
    }
 
-
-
-
+   function updateHabitStatus(isDone, id) {
+       const body = {id, isDone, date: new Date()};
+       post("/update-habit", body).then(habit => {
+           let amount  = isDone ? 5: -5;
+           if(habit.type === "weekly") 
+                  amount *= 4; 
+            else if(habit.type === "monthly") {
+                amount *= 6; 
+            }
+            post("update-money", {amount}).then(money => {
+                setBalance(balance => balance + money);
+            })
+        })
+    }
     return (
         <div> 
              <div className="left-container">
@@ -180,11 +190,12 @@ export default function HabitList({moneyIndicator}) {
           <div className="panel"></div>
               </div>
             <div>{habitTitle}</div>
-           {habitList.map(habit =>  (<Habit key={habit._id}
+           {habitList.map(habit =>  (<Habit 
+           key={habit._id}
              content = {habit.content}
             isDone={habit.isDone}
-            updatedDd={isDone => updatedDb(isDone, habit._id)}
-        delteHabit={()=> deleteHabit(habit._id)}
+            updateHabitStatus ={isDone => updateHabitStatus(isDone, habit._id)}
+            deleteHabit={()=> deleteHabit(habit._id)}
             /> ))}
 
               <form className="newhabitandbutton" data-tut="newhabit">
@@ -193,7 +204,7 @@ export default function HabitList({moneyIndicator}) {
                 className="text"
                 placeholder={"Add a new " + habitType + " habit"}
                 value={habitText}
-                onChange={handleInputChange}
+                onChange={(e)=>setHabitText(e.target.value) }
                 onKeyDown ={onKeyDown}
               />
               <input
@@ -202,6 +213,11 @@ export default function HabitList({moneyIndicator}) {
                 value="+"
               />
           </form>
+          <div>
+              <div className = "balance"> 
+              {balance}
+              </div>
+          </div>
           </div>
 
     )

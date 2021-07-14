@@ -1,13 +1,15 @@
 import * as  React from 'react';
-import { HabitInterface  } from './HabitList';
 
-interface HabitProps extends HabitInterface {
+interface HabitProps {
+   isDone: boolean; 
+   key: string;
+   content: string;
    deleteHabit: ()=> void;
-   updateDb: ()=> void;
+ updateHabitStatus: (isDone: boolean)=> void;
 }
 
 
-  export const   Habit:React.FC<HabitProps> = ({isDone, deleteHabit, updateDb, content}) => {
+  export const   Habit: React.FC<HabitProps> = ({deleteHabit, updateHabitStatus, content, isDone})=> {
   const handleInputChanged = () => {
 
   }
