@@ -1,5 +1,7 @@
 import './App.css';
 import React, {useEffect, useState} from "react";
+import { CircleLoader } from 'react-spinners';
+import Tour from "reactour"; 
 import { get, post } from './utils/fetch';
 import { socket } from './socketio-client';
 import { oneDay, threeDays } from './utils/util';
@@ -22,6 +24,7 @@ import turtle from "./data/turtle.png";
 import octopus from "./data/octopus.png";
 import seaHorse from "./data/seahorse.png";
 import Habits from './components/pages/Habits';
+import Login from './components/pages/Login';
 
    const firstTimeSteps = [
   {
@@ -374,8 +377,23 @@ function App() {
      
   return (
     <div className="App">
-      From App
+      {!user.userid &&
+      <Login handleLogin = {handleLogin} />
+      }
+      (!completedTutorial  ||   isTourOpen) ?
+      <CircleLoader />:
+      <Tour
+  
+      steps = {completedTutorial ? steps: firstTimeSteps}
+      idx = {0}
+      isOpen = {isTourOpen}
+      onRequesClose= {closeTour}
+       />
+
+
+
       <Habits moneyIndicator = {moneyIndicator} />
+
     </div>
   )
   }
