@@ -5,7 +5,7 @@ export default function Navbar() {
     
     return (
         <div>
-            hellwo from Narabr
+            hellwo from Narabr, {CLIENT_ID}
         </div>
     )
 }
