@@ -1,5 +1,5 @@
 import React from 'react'
-import {CLIENT_ID} from "../../utils/variables/CLIENT_ID";
+import {CLIENT_ID} from "../../utils/variables";
 
 export default function Navbar() {
     

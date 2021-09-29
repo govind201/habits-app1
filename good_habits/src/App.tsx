@@ -277,9 +277,9 @@ function App() {
    const togglePopup = ()=> {
         setPopup((curr) => !curr);
    }
-   const pickingFish = () => {
-     console.log("Fish is being picked");
-   }
+  //  const pickingFish = () => {
+  //    console.log("Fish is being picked");
+  //  }
 
    const sellFish = (fish) => {
        const idx = placedFishArray.indexOf(fish);
