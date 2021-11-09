@@ -1,3 +1,4 @@
 # habits-app1
 
-An app to keep track of your habits;
+An app to keep track of your habits; 
+Created using Node.js, express, TypeOrm and React.js.
