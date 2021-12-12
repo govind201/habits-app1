@@ -1,9 +1,15 @@
-const mongoose = require("mongoose");
+import { PrimaryGeneratedColumn, Column, Entity, BaseEntity} from "typeorm"; 
 
-const AllFishSchema = new mongoose.Schema({
-    type: String,
-    price: Number,
-    name: String,
-});
+@Entity()
+export default class Fish extends BaseEntity{
+     @PrimaryGeneratedColumn()
+     fish_id: number
+    @Column({type: 'date'})
+    last_fed: string
 
-module.exports  = mongoose.model("allfish", AllFishSchema);
+    @Column() 
+    name: string
+
+    @Column() 
+    price: string
+}
