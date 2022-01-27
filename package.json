@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "nodemon --exec ts-node server/index.ts"
+    "start": "nodemon server/index.js",
+    "build": "cd client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
@@ -11,6 +12,7 @@
   "dependencies": {
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
     "express-sslify": "^1.2.0",
     "google-auth-library": "^7.1.1",
     "http": "^0.0.1-security",
@@ -21,9 +23,7 @@
     "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
     "socket.io": "^4.1.2",
-    "ts-node": "^10.4.0",
-    "typeorm": "^0.2.38",
-    "typescript": "^4.4.4"
+    "typeorm": "^0.2.38"
   },
   "engines": {
     "node": "14.17.0"

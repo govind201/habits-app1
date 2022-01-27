@@ -1,28 +1,27 @@
 const express = require("express");
 
 // import models so we can interact with the database
-const User = require("./models/user");
-const FedFish = require("./models/fedfish.js");
-const Habit = require("./models/habit.js");
-const Message = require("./models/message.js");
-const MyFish = require("./models/myfish.js");
-const AlmostMyFish = require("./models/almostmyfish.js");
-const Money = require("./models/money.js");
-const TodayFish = require("./models/todayfish.js");
-const Name = require("./models/name.js");
-const DeadFish = require("./models/deadfish.js");
-const Tutorial = require("./models/tutorial.js");
+const User = require("../models/user.js");
+const FedFish = require("../models/fedfish.js");
+const Habit = require("../models/habit.js");
+const Message = require("../models/message.js");
+const MyFish = require("../models/myfish.js");
+const AlmostMyFish = require("../models/almostmyfish.js");
+const Money = require("../models/money.js");
+const TodayFish = require("../models/todayfish.js");
+const Name = require("../models/name.js");
+const DeadFish = require("../models/deadfish.js");
+const Tutorial = require("../models/tutorial.js");
 
 const ObjectID = require('mongodb').ObjectID;
 
 // import authentication library
-const auth = require("./auth");
+const auth = require('../auth')
 
 // api endpoints: all these paths will be prefixed with "/api/"
 const router = express.Router();
 
 //initialize socket
-const socket = require("./server-socket");
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -34,18 +33,12 @@ router.get("/whoami", (req, res) => {
   res.send(req.user);
 });
 
-router.post("/initsocket", (req, res) => {
-  if (req.user) socket.addUser(req.user, socket.getSocketFromSocketID(req.body.socketid));
-  res.send({});
-});
-
-
 router.get("/tutorial",(req,res) => {
-  Tutorial.findOne({googleid: req.query.googleid}).then((res) =>{
-      if(!res) 
+  Tutorial.findOne({googleid: req.query.googleid}).then((result) =>{
+      if(!result) 
       res.send({googleid: null});
     else {
-      res.send(res);
+      res.send(result);
     }
   });
 });
@@ -326,32 +319,6 @@ router.get("/killFish", (req, res) => {
     res.send(f);
   });
 });
-
-
-router.post("/chat", (req, res) => {
-  const newMessage = new Message({
-    recipient: req.body.recipient,
-    sender: req.body.sender,
-    content: req.body.content,
-    timestamp: Date.now(),
-  })
-  newMessage.save().then((f) => res.send(f));
-
-});
-
-router.get("/chat", (req, res) => {
-  // get messages that are from me->you OR you->me
-  let query = {
-      $or: [
-        { "sender": req.user._id, "recipient": 'ray' },
-        { "sender": 'ray', "recipient": req.user._id },
-      ],
-    };
-
-  Message.find(query).then((messages) => res.send(messages));
-});
-
-
 
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
