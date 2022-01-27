@@ -1,5 +1,8 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import User from "./user";
+// import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+const { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn }  = require("typeorm");
+// import User from "./user";
+const User = require("./user.ts");
+
 
 @Entity()
 export default  class Habit extends BaseEntity{
@@ -9,12 +12,18 @@ export default  class Habit extends BaseEntity{
     @Column()
     type: string
 
+    @Column() 
+    google_id: string
+
     @Column()
-    text: string
+    content: string
+
+    @Column({default: false})
+    is_done: Boolean
 
     @CreateDateColumn()
     created_at: Date
 
     @ManyToOne(()=>User, user => user.habits)
-    user: User
+    creator_id: User
 }

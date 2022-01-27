@@ -1,5 +1,6 @@
 import { io } from "socket.io-client";
-import {post} from "./utils/fetch/post";
+//import {post} from "./utils/fetch/post";
+import {post} from './utils/fetch/post';
 
 const host = window.location.hostname + ":" + window.location.port;
 export const socket = io(host)  

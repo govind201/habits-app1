@@ -1,5 +1,7 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import Habit from "./habit";
+// import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+const { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } = require("typeorm");
+// import Habit from "./habit";
+const Habit = require("./habit.ts");
 
 
 @Entity()
@@ -15,8 +17,11 @@ import Habit from "./habit";
      
     @Column()
     money: number
+
+    @Column()
+    has_unplaced_fish: Boolean
  
-    @OneToMany(()=>Habit, habit=>habit.user)
+    @OneToMany(()=>Habit, habit=>habit.creator_id)
     habits: Habit[] 
     
  }

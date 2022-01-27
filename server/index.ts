@@ -1,8 +1,14 @@
-import { createConnection } from 'typeorm';
-import express from 'express';
-import api from './api/api';
-import enforce from "express-sslify";
+//import { createConnection } from 'typeorm';
+const {createConnection} = require('typeorm');
+// import express from 'express';
+const express = require('express');
+// import api from '';
+const api = require('./api/api.js')
+// import enforce from "express-sslify";
+const enforce = require('express-sslify');
 
+
+// import api from './api/api';
 
 const app = express();
 const  main = async() => {
@@ -15,9 +21,10 @@ const  main = async() => {
             database:  'ruth',
             entities: [__dirname + '/entity/*.ts']
       })
-      .then(() => {
+      .then((connection) => {
              app.listen(8080, ()=> console.log("Running on port 8080"));
-             return  console.log('Database connected')
+                 console.log('Database connected')
+                return connection;
       })
       .catch(err => console.log(err));
 }

@@ -22,7 +22,7 @@ function convertToJSON(res) {
     });
 }
 
-export function get(endpoint, params = {}) {
+function get(endpoint, params = {}) {
   const fullPath = endpoint + "?" + formatParams(params);
   return fetch(fullPath)
     .then(convertToJSON)
@@ -31,7 +31,7 @@ export function get(endpoint, params = {}) {
     });
 }
 
-export function post(endpoint, params = {}) {
+function post(endpoint, params = {}) {
   return fetch(endpoint, {
     method: "post",
     headers: { "Content-type": "application/json" },
@@ -41,4 +41,8 @@ export function post(endpoint, params = {}) {
     .catch((error) => {
       throw new Error(`POST request to ${endpoint} failed with error:\n${error}`);
     });
+}
+module.exports = {
+  post, 
+  get, 
 }
