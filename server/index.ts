@@ -1,33 +1,50 @@
-//import { createConnection } from 'typeorm';
-const {createConnection} = require('typeorm');
-// import express from 'express';
 const express = require('express');
-// import api from '';
-const api = require('./api/api.js')
-// import enforce from "express-sslify";
-const enforce = require('express-sslify');
-
-
-// import api from './api/api';
-
+const session = require('express-session');
+const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config();
+const mongoose = require('mongoose');
+const Joi = require('joi');
+const auth = require('./auth');
+const socket  = require('./socket');
+const fishHome = require('./routes/fishHome');
 const app = express();
-const  main = async() => {
-      await createConnection({
-            type: 'postgres',
-            host: 'localhost',
-            port: 5432,
-            username: 'ruth',
-            password: 'ruth',
-            database:  'ruth',
-            entities: [__dirname + '/entity/*.ts']
-      })
-      .then((connection) => {
-             app.listen(8080, ()=> console.log("Running on port 8080"));
-                 console.log('Database connected')
-                return connection;
-      })
-      .catch(err => console.log(err));
-}
-app.user("/api", api)
-app.use(enforce.HTTPS());  
-main();
+ 
+app.use(
+  session({
+    secret: process.env.SESSION_KEY,
+    saveUninitialized: false,
+    resave: false,
+  })
+)
+
+mongoose.connect( "mongodb://localhost:27017/ruth", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+}).then(console.log("Connected to ruth in mondodb")).catch(err => console.error("Could not connect ruth database", err))
+
+app.use(express.json()); //To process POST requests
+app.use(express.static(path.resolve(__dirname, '../client/build')));
+
+// add api to all routes
+app.use('/api/fishHome', fishHome);
+
+app.use(function (err, _req, res, _next) {
+  res.status(500).send('Internal Server Error', err);
+});
+app.use(function (err, _req, res, _next) {
+  res.status(500).send('Internal Server Error', err);
+});
+
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, ()=> {
+    console.log(`Server lisening on port:${PORT}`);
+})
+
+
+
+app.get('*', (_, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+});
