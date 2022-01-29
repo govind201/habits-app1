@@ -2,7 +2,7 @@ import './App.css';
 import React, {useEffect, useState} from "react";
 import { CircleLoader } from 'react-spinners';
 import Tour from "reactour"; 
-import { get, post } from './utils/fetch';
+// import { get, post } from './utils/fetch';
 import { socket } from './socketio-client';
 import { oneDay, threeDays } from './utils/util';
 import doryFish  from "./data/doryfish.png";
@@ -20,13 +20,11 @@ import plankton from "./data/plankton.png";
 import ppfish from "./data/purplepatternedfish.png";
 import shrimp from "./data/shrimp.png";
 import striped from "./data/stripedfish.png";
-import turtle from "./data/turtle.png";
-import octopus from "./data/octopus.png";
 import seaHorse from "./data/seahorse.png";
 import Habits from './components/pages/Habits';
 import Login from './components/pages/Login';
-
-   const firstTimeSteps = [
+   
+const firstTimeSteps = [
   {
     selector: '',
     content: "Welcome to Habit Aquarium! Let's go through a quick introduction. You can use the arrows (or arrow keys) to navigate.",
@@ -363,12 +361,6 @@ function App() {
     }
     else if (fishName === 'stripedfish') {
       return striped;
-    }
-    else if (fishName === 'turtle'){
-      return turtle;
-    }
-    else if (fishName === 'octopus'){
-      return octopus;
     }
     else if (fishName === 'seahorse') {
       return seaHorse;
