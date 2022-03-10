@@ -10,9 +10,16 @@ If I were to use relational data base schema. It would be like this.
 
 
 
+
+
+
 Home page of the website:
 
 ![home](https://user-images.githubusercontent.com/60074455/157754246-a0acbc61-74ac-48f7-bad8-e2bd12f9f6bd.png)
+
+
+
+
 
 
 
@@ -22,15 +29,32 @@ Inventory to sell fish.
 
 
 
+
+
+
+
+
+
 Talk to ray if you wanna buy more fish.
 
 ![ray](https://user-images.githubusercontent.com/60074455/157754220-a7647821-4ca7-40fa-8955-5f7ece91bb1b.png)
 
 
 
+
+
+
+
+
 Track your daily, weekly, and monthly habits
 
 ![daily-habits](https://user-images.githubusercontent.com/60074455/157754202-3fc323e9-d4d5-4380-9ac5-25f5d2a3e927.png)
+
+
+
+
+
+
 
 
 Fish must be fed within 3 days; however, not too much!  
