@@ -1,0 +1,24 @@
+.SingleMessage-container{
+    display:flex;
+    position:relative;
+    flex-direction:column;
+}
+
+.Response-container{
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 10px;
+}
+
+.FishCardGroup{
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 50%;
+    flex: none;
+    
+}
+

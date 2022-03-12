@@ -1,0 +1,20 @@
+.Chat-button {
+    color: var(--darkblue);
+    border: var(--brightblue) 1px solid;
+    border-radius: 20px;
+    background: none;
+    transition: color 0.1s, background 0.1s;
+  }
+  
+  .Chat-button:hover {
+    color: var(--white);
+    background-color: var(--brightblue);
+  }
+
+  .Chat-button {
+    font-family: "Open Sans";
+    font-size: 14px;
+    font-weight: 600;
+    padding: var(--s) var(--m);
+    margin: var(--xs);
+  }

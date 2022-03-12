@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css?family=Croissant+One|Open+Sans|Open+Sans+Condensed:300|Quicksand&display=swap');
+
+.Inventory-container {
+    width: 80vw;
+    height: 60vh;
+    margin-top: 10vh;
+    margin-left: 10vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+
+.InventoryCardGroup {
+    z-index: 2;
+    margin-right: 32px;
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    /* width: 90%; */
+    height: 100%;
+    flex: 5 4;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: white;
+    gap: 15px;
+    
+    
+}
+
+.InventoryCardGroup2 {
+    position: relative;
+    z-index: 2;
+    margin-top: 20px;
+    align-self: center;
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    width: 90%;
+    height: 45%;
+    flex: 4;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: white;
+    
+}
+
+.fishGroup {
+    width: 40%;
+    align-content: center;
+    z-index: 1;
+}
+
+.no-fish {
+    font-family: "Quicksand";
+    width: 100%;
+    height: 100%;
+    color: white;
+    display: flex;
+    justify-items: space-around;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.Inventory-selling-container {
+    height: 100%;
+    /* width: 42%; */
+    margin-left: 32px;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: rgb(238, 238, 238);
+    z-index: 1;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex: 4 5;
+    z-index: 1;
+    border-style: solid;
+    border-width: 3px;
+    border-color: white;
+    overflow-y: auto;
+    flex-grow: 1.5;
+}
+
+.Inventory-sell-button {
+    width: 100px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    border-radius: 5px;
+    font-family: "Quicksand";
+    margin-left: 10px;
+}
+
+.Inventory-selling-text {
+    height: fit-content;
+    width: 90%;
+    font-family: "Quicksand";
+    padding: 10px;
+
+}
+.Inventory-selling-selected {
+    height: 40%;
+    padding: 10px;
+    width: 95%;
+    overflow-y: auto;
+    font-family: "Quicksand";
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-content: center;
+    /* color: white; */
+    
+}
+
+.Inventory-selected-balance {
+    font-family: "Quicksand";
+    margin-left: 10px;
+}
+
+.none-selected {
+    font-family: "Quicksand";
+    width: fill;
+    margin-left: calc(50% - 60px);
+    margin-top: 20px;
+    color: white;
+}
