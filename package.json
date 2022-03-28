@@ -1,10 +1,9 @@
 {
-  "name": "weblab-skeleton",
+  "name": "habit-live",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "hotloader": "webpack-dev-server --config ./webpack.config.js --mode development --port 5000",
     "start": "node server.js"
   },
   "repository": {
@@ -71,9 +70,6 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-hot-loader": "^4.6.3",
-    "style-loader": "^0.23.1",
-    "webpack": "^4.28.3",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.14"
+    "style-loader": "^0.23.1"
   }
 }

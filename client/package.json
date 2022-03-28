@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "start-client": "react-scripts start",
-    "build": "react-scripts build && (cd server && npm install)",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "start": "cd server && yarn start"
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "@reach/router": "^1.2.1",
@@ -57,10 +57,7 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-hot-loader": "^4.6.3",
-    "style-loader": "^0.23.1",
-    "webpack": "^4.28.3",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.14"
+    "style-loader": "^0.23.1"
   },
   "browserslist": {
     "production": [
