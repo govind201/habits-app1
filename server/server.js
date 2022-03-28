@@ -23,7 +23,8 @@ const socket = require("./server-socket");
 // TODO change database name to the name you chose
 
 // connect to mongodb
-mongoose.connect( "mongodb://localhost:27017/ruth", {
+const DB_URL = process.env.DATABASE_URL || "mongodb://localhost:27017/ruth";
+mongoose.connect( DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
@@ -57,13 +58,20 @@ app.use(auth.populateCurrentUser);
 app.use("/api", api);
 
 // load the compiled react files, which will serve /index.html and /bundle.js
-const reactPath = path.resolve(__dirname, "..", "client", "dist");
-app.use(express.static(reactPath));
+// const reactPath = path.resolve(__dirname, "..", "client", "dist");
+// app.use(express.static(reactPath));
+
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 // for all other routes, render index.html and let react router handle it
-app.get("*", (req, res) => {
-  res.sendFile(path.join(reactPath, "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(reactPath, "index.html"));
+// });
 
 // any server errors cause this function to run
 app.use((err, req, res, next) => {
