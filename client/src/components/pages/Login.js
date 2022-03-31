@@ -4,7 +4,7 @@ import "../../utilities.css";
 import "./Login.css";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 
-const GOOGLE_CLIENT_ID = "707474204069-ibaig6vr8u2gf995465eel35t6kf6u1r.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = '792384898936-17eq4677ondom7fk2i7bqbai5dvh55vu.apps.googleusercontent.com';
 
 class Login extends Component {
     constructor(props) {
@@ -19,7 +19,7 @@ class Login extends Component {
         return ( <>
         <div className="logo-container">
             <div className="logo">
-                Welcome to your Habit Aquarium.
+                Welcome to your Fishy Habit.
             </div>
             <div className="description">
                 Keep track of good habits and grow your aquarium!

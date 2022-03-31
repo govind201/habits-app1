@@ -20,7 +20,8 @@ const override = css`
   border-color: red;
 `;
 
-const GOOGLE_CLIENT_ID = "707474204069-ibaig6vr8u2gf995465eel35t6kf6u1r.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = '792384898936-17eq4677ondom7fk2i7bqbai5dvh55vu.apps.googleusercontent.com';
+
 const firstTimeSteps = [
   {
     selector: '',
@@ -657,8 +658,7 @@ class App extends Component {
           </Router> 
           <button className="tour-button" data-tut="tourbutton" onClick={this.openTour}>Tour</button>
           <div className="signature">
-            made with love (and lots of fish) by Claire, Andrea, and Cindy
-          </div>
+            made with love by Govind Singh          </div>
         </div>
         </>
           }

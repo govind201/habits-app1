@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-// TODO(cindywang): add padding in this file
 
 const Content = styled.div`
   height: calc(${props => props.height} - ${props => (props.hideInput ? '56px' : '112px')});
