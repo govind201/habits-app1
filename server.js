@@ -36,7 +36,6 @@ const app = express();
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 
 
-app.use(validator.checkRoutes);
 
 // allow us to process POST requests
 app.use(express.json());
@@ -63,7 +62,7 @@ app.use("/api", api);
 // app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+  res.sendFile(path.join(__dirname+'/client/public/index.html'));
 });
 
 // for all other routes, render index.html and let react router handle it
