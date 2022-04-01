@@ -37,6 +37,7 @@ const socket = require("./server-socket");
 
 // connect to mongodb
 const DB_URL = process.env.DATABASE_URL || "mongodb://localhost:27017/ruth";
+console.log("db ulr, ", DB_URL);
 mongoose
   .connect( DB_URL, {
     useNewUrlParser: true,
