@@ -24,14 +24,13 @@ const http = require("http");
 const express = require("express"); // backend framework for our node server.
 const app = express();
 const session = require("express-session"); // library that stores info about each connected user
+app.use(session({ secret: 'cat', resave: true, saveUninitialized: true }));
 // app.use(express.cookieParser('your secret here'));
 const mongoose = require("mongoose"); // library to connect to MongoDB
 const path = require("path"); // provide utilities for working with file and directory paths
 
 const api = require("./api");
 const auth = require("./auth");
-app.use(session({ secret: 'ruth', resave: true, saveUninitialized: true }));
-// socket stuff
 const socket = require("./server-socket");
 
 
@@ -51,14 +50,7 @@ app.use(validator.checkRoutes);
 // allow us to process POST requests
 app.use(express.json());
 
-// set up a session, which will persist login data across requests
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+// set up a session, wehich will persist login data across requests
 
 // this checks if the user is logged in, and populates "req.user"
 app.use(auth.populateCurrentUser);

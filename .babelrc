@@ -1,19 +1,7 @@
 {
   "presets": [
-     ["@babel/preset-env", {
-        "targets": { "browsers": ["last 2 versions"] },
-        "corejs": "3",
-        "useBuiltIns": "usage"
-        }],
-      "@babel/react",
-        "@babel/env",
-      {
-        "plugins" : ["@babel/plugin-proposal-class-properties"]
-      }
-      "presets": [
-        "@babel/react"
-      ]
-
-  ],
-   "plugins": ["emotion"]
+      "@babel/preset-env",
+      "@babel/preset-react",
+      "@babel/react"
+   ]
 }
