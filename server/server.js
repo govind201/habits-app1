@@ -34,9 +34,6 @@ app.use(session({ secret: 'ruth', resave: true, saveUninitialized: true }));
 // socket stuff
 const socket = require("./server-socket");
 
-// Server configuration below
-// TODO change connection URL after setting up your team database
-// TODO change database name to the name you chose
 
 // connect to mongodb
 const DB_URL = process.env.DATABASE_URL || "mongodb://localhost:27017/ruth";
