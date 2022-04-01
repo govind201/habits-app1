@@ -20,6 +20,11 @@
   "engine": {
     "node": ">10.0.0"
   },
+  "babel": {
+    "presets": [
+      "babel-preset-react-app"
+    ]
+  },
   "dependencies": {
     "@reach/router": "^1.2.1",
     "connect-ensure-login": "^0.1.1",
